@@ -1,32 +1,44 @@
 @winner = ""
+@frag = ""
 
-def janken
+def janken()
   puts "じゃんけん.."
-  puts "0(グー)1(チョキ)2(パー)"
+  puts "0(グー)1(チョキ)2(パー)3(戦わない)"
   jankens = ["グー","チョキ","パー"]
   player_hand = gets.chomp
   program_hand = rand(3)
+  if player_hand.to_i === 3
+    puts "終了します"
+    exit
+  elsif player_hand.to_i > 3
+    puts "エラー"
+    exit
+  end
   puts "ホイ！"
   puts "-----------"
   puts "あなた：#{jankens[player_hand.to_i]}を出しました"
   puts "相手：#{jankens[program_hand.to_i]}を出しました"
   if player_hand.to_i === program_hand.to_i
     puts "あいこ"
-   return true
+    @frag = true
   elsif (player_hand.to_i === 0 && program_hand.to_i === 1) || (player_hand.to_i === 1 && program_hand.to_i === 2) || (player_hand.to_i === 2 && program_hand.to_i === 0)
     puts "勝ち"
     @winner = "player"
-    return false
+    @frag = false
   else 
     puts "負け"
     @winner = "program"
-    return false
+    @frag = false
   end
 end
 
-while janken do
-  janken()
+def janken_while
+  while @frag do
+    janken
+  end
 end
+
+janken_while
 
 def look
   puts "-----------"
@@ -35,6 +47,10 @@ def look
   looks = ["上","下","左","右"]
   player_look = gets.chomp
   program_look = rand(3)
+  if player_look.to_i > 3 
+    puts "エラー"
+    exit
+  end
   puts "ホイ！"
   puts "-----------"
   puts "あなた：#{looks[player_look.to_i]}"
@@ -53,7 +69,8 @@ def look
 end
 
 while look do
-  janken()
+  janken
+  janken_while
 end
 
 
